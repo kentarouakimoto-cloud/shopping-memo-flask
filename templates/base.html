@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}買い物メモ{% endblock %}</title>
+</head>
+<body>
+<nav>
+{% if current_user.is_authenticated %}
+ログイン中: {{ current_user.username }} | <a href="{{ url_for('logout') }}">ログアウト</a>
+{% else %}
+<a href="{{ url_for('login') }}">ログイン</a> | <a href="{{ url_for('register') }}">会員登録</a>
+{% endif %}
+</nav>
+<hr>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul>
+{% for m in messages %}
+<li>{{ m }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+
+{% block content %}{% endblock %}
+</body>
+</html>

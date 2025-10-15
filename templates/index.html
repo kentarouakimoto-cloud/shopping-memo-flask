@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}マイ買い物メモ{% endblock %}
+{% block content %}
+<h1>マイ買い物メモ</h1>
+<p><a href="{{ url_for('new_memo') }}">新しいメモを作成</a></p>
+{% if memos %}
+<ul>
+{% for memo in memos %}
+<li>
+<strong>{{ memo.title }}</strong> ({{ memo.created_at.strftime('%Y-%m-%d %H:%M') }})
+<div>{{ memo.content | nl2br }}</div>
+<div>
+<a href="{{ url_for('edit_memo', memo_id=memo.id) }}">編集</a>
+<form action="{{ url_for('delete_memo', memo_id=memo.id) }}" method="post" style="display:inline">
+<button type="submit">削除</button>
+</form>
+</div>
+</li>
+{% endfor %}
+</ul>
+{% else %}
+<p>メモはまだありません。</p>
+{% endif %}
+{% endblock %}
